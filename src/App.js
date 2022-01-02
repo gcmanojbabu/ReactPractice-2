@@ -44,22 +44,20 @@ export default class App extends Component {
   }
   render() {
     return <div>
-      {this.state.myArray.map((item, index) => {
+      {/* {this.state.myArray.map((item, index) => {
         // return <div key={index}>{i}</div>
         return <NewComponent key={index} myValue={item}></NewComponent>
       })}
-      <button onClick={this.printfn}>Click</button>
+      <button onClick={this.printfn}>Click</button> */}
       {/* {this.state.appName} */}
-      {/* <button onClick={() => {
+      {/* <button onClick={ () => {
         this.setState({
           appName: 'Lean App'
         })
       }}>Click1</button> */}
-
       {/* {this.state.appName1} */}
-
-      <input value={this.state.stringval} onChange={this.inputVal}></input>
-      {this.state.stringval}
+      {/* <input value={this.state.stringval} onChange={this.inputVal}></input>
+      {this.state.stringval} */}
 
       <br></br>
       <Table bordered>
@@ -80,6 +78,7 @@ export default class App extends Component {
           </tbody>
         })}
       </Table>
+
     </div>
   }
 
