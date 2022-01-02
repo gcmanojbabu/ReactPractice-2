@@ -9,10 +9,19 @@ export default class App extends Component {
     super(props)
     this.state = {
       formObj: {
-        email: 'email',
-        password: 'password',
-        rePassword: 'rePassword',
+        email: '',
+        password: '',
+        rePassword: '',
         country: 'india',
+        firstName: '',
+        lastName: '',
+        jobTitle: '',
+        workPhone: '',
+        companyName: '',
+        address: '',
+        city: '',
+        state: 'tamilnadu',
+        zipcode: '',
       }
     }
   }
@@ -24,6 +33,15 @@ export default class App extends Component {
     tempObj.password = e.target.name === 'passwordField' ? e.target.value : this.state.formObj['password'];
     tempObj.rePassword = e.target.name === 'rePasswordField' ? e.target.value : this.state.formObj['rePassword'];
     tempObj.country = e.target.name === 'countryField' ? e.target.value : this.state.formObj['country'];
+    tempObj.firstName = e.target.name === 'firstNameField' ? e.target.value : this.state.formObj['firstName'];
+    tempObj.lastName = e.target.name === 'lastNameField' ? e.target.value : this.state.formObj['lastName'];
+    tempObj.jobTitle = e.target.name === 'jobTitleField' ? e.target.value : this.state.formObj['jobTitle'];
+    tempObj.workPhone = e.target.name === 'workPhoneField' ? e.target.value : this.state.formObj['workPhone'];
+    tempObj.companyName = e.target.name === 'companyNameField' ? e.target.value : this.state.formObj['companyName'];
+    tempObj.address = e.target.name === 'addressField' ? e.target.value : this.state.formObj['address'];
+    tempObj.city = e.target.name === 'cityField' ? e.target.value : this.state.formObj['city'];
+    tempObj.state = e.target.name === 'stateField' ? e.target.value : this.state.formObj['state'];
+    tempObj.zipcode = e.target.name === 'zipcodeField' ? e.target.value : this.state.formObj['zipcode'];
 
     this.setState({ formObj: tempObj })
     console.log(tempObj);
@@ -54,15 +72,44 @@ export default class App extends Component {
             <option value="france">France</option>
           </select>
         </label>
+        <label>Name:
+          <input placeholder="First Name" name="firstNameField" type="text" value={this.state.formObj['firstName']} onChange={this.handleChange} />
+          <input placeholder="Last Name" name="lastNameField" type="text" value={this.state.formObj['lastName']} onChange={this.handleChange} />
+        </label>
+        <label>Job Title:
+          <input name="jobTitleField" type="text" value={this.state.formObj['jobTitle']} onChange={this.handleChange} />
+        </label>
+        <label>Work Phone:
+          <input name="workPhoneField" type="text" value={this.state.formObj['workPhone']} onChange={this.handleChange} />
+        </label>
+        <label>Company Name:
+          <input name="companyNameField" type="text" value={this.state.formObj['companyName']} onChange={this.handleChange} />
+        </label>
+        <label>Address:
+          <textarea name="addressField" type="text" value={this.state.formObj['address']} onChange={this.handleChange} />
+        </label>
+        <label>City:
+          <input name="cityField" type="text" value={this.state.formObj['city']} onChange={this.handleChange} />
+        </label>
+        <label>State/Province:
+          <select name="stateField" value={this.state.formObj['state']} onChange={this.handleChange}>
+            <option value="kerala">Kerala</option>
+            <option value="tamilnadu">Tamil nadu</option>
+            <option value="kernadaga">Kernadaga</option>
+            <option value="andhra">Andhra</option>
+          </select>
+        </label>
+        <label>ZIP/Postal Code:
+          <input name="zipcodeField" type="text" value={this.state.formObj['zipcode']} onChange={this.handleChange} />
+        </label>
 
         < input type="submit" value="Creat Account" />
       </form >
-      {/* {this.state.formObj['password']} */}
 
-
+      <br></br>
       <div>
         {Object.keys(this.state.formObj).map((i, index) => {
-          return <div>{i}</div>
+          return <div key={index}>{this.state.formObj[i]}</div>
         })}
       </div>
     </div >
