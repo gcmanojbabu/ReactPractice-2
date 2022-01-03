@@ -8,6 +8,7 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      showResult: false,
       formObj: {
         email: '',
         password: '',
@@ -47,9 +48,9 @@ export default class App extends Component {
     console.log(tempObj);
   }
 
-  handleSubmit(event) {
-    // alert(this.state.formObj['email']);
-    alert('hello');
+  handleSubmit = (e) => {
+    this.setState({ showResult: true });
+    e.preventDefault();
   }
 
   render() {
@@ -107,14 +108,16 @@ export default class App extends Component {
       </form >
 
       <br></br>
-      <div>
-        {Object.keys(this.state.formObj).map((i, index) => {
-          return <div key={index}>{this.state.formObj[i]}</div>
-        })}
-      </div>
+      {this.state.showResult &&
+        <div >
+          {Object.keys(this.state.formObj).map((i, index) => {
+            return <div key={index}>{i}:{this.state.formObj[i]}</div>
+          })}
+        </div>}
     </div >
   }
 }
+
 
 
 
