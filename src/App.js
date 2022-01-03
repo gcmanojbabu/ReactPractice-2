@@ -16,6 +16,7 @@ export default class App extends Component {
         country: 'india',
         firstName: '',
         lastName: '',
+        gender: '',
         jobTitle: '',
         workPhone: '',
         companyName: '',
@@ -36,6 +37,8 @@ export default class App extends Component {
     tempObj.country = e.target.name === 'countryField' ? e.target.value : this.state.formObj['country'];
     tempObj.firstName = e.target.name === 'firstNameField' ? e.target.value : this.state.formObj['firstName'];
     tempObj.lastName = e.target.name === 'lastNameField' ? e.target.value : this.state.formObj['lastName'];
+    tempObj.gender = e.target.name === 'genderMaleField' ? 'male' : 'female';
+    // tempObj.gender = e.target.name === 'genderFemaleField' ? 'female' : '';
     tempObj.jobTitle = e.target.name === 'jobTitleField' ? e.target.value : this.state.formObj['jobTitle'];
     tempObj.workPhone = e.target.name === 'workPhoneField' ? e.target.value : this.state.formObj['workPhone'];
     tempObj.companyName = e.target.name === 'companyNameField' ? e.target.value : this.state.formObj['companyName'];
@@ -45,6 +48,7 @@ export default class App extends Component {
     tempObj.zipcode = e.target.name === 'zipcodeField' ? e.target.value : this.state.formObj['zipcode'];
 
     this.setState({ formObj: tempObj })
+    console.log(e.target);
     console.log(tempObj);
   }
 
@@ -76,6 +80,12 @@ export default class App extends Component {
         <label>Name:
           <input placeholder="First Name" name="firstNameField" type="text" value={this.state.formObj['firstName']} onChange={this.handleChange} />
           <input placeholder="Last Name" name="lastNameField" type="text" value={this.state.formObj['lastName']} onChange={this.handleChange} />
+        </label>
+        <label className="radio">Gender:
+          <input name="genderMaleField" type="radio" checked={this.state.formObj['gender'] == 'male'} onChange={this.handleChange} />
+          <span>male</span>
+          <input name="genderFemaleField" type="radio" checked={this.state.formObj['gender'] == 'female'} onChange={this.handleChange} />
+          <span>female</span>
         </label>
         <label>Job Title:
           <input name="jobTitleField" type="text" value={this.state.formObj['jobTitle']} onChange={this.handleChange} />
