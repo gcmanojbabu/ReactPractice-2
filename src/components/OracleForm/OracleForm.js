@@ -42,6 +42,7 @@ export class OracleForm extends Component {
 
         this.setState({ formObj: tempObj })
         console.log(tempObj);
+        this.handleFormValidationOnChange(e.target.name)
     }
 
     handleSubmit = (e) => {
@@ -53,6 +54,40 @@ export class OracleForm extends Component {
 
     handleBack = () => {
         this.setState({ showResult: false });
+    }
+
+    handleFormValidationOnChange = (field) => {
+        let { formObj } = this.state;
+        let errors = {};
+
+        if (field === 'email' && (!formObj["email"] || typeof formObj["email"] === "undefined" || !formObj["email"].match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/))) {
+            errors["email"] = "Please enter valid email";
+        }
+        if (field === 'firstName' && (!formObj["firstName"] || typeof formObj["firstName"] === "undefined" || !formObj["firstName"].match(/^[a-zA-Z ]+$/))) {
+            errors["firstName"] = "Please enter valid name";
+        }
+        if (field === 'lastName' && (!formObj["lastName"] || typeof formObj["lastName"] === "undefined" || !formObj["lastName"].match(/^[a-zA-Z ]+$/))) {
+            errors["lastName"] = "Please enter valid name";
+        }
+        if (field === 'gender' && (!formObj["gender"] || typeof formObj["gender"] === "undefined")) {
+            errors["gender"] = "Please select valid option";
+        }
+        if (field === 'pincode' && (!formObj["pincode"] || typeof formObj["pincode"] === "undefined" || !formObj["pincode"].match(/^^[1-9][0-9]{5}$/))) {
+            errors["pincode"] = "Please enter valid pincode";
+        }
+        if (field === 'password' && (!formObj["password"] || typeof formObj["password"] === "undefined")) {
+            errors["password"] = "Please enter valid password";
+        }
+        if (field === 'rePassword' && (!formObj["rePassword"] || typeof formObj["rePassword"] === "undefined")) {
+            errors["rePassword"] = "Please enter valid Password";
+        }
+        else if (field === 'rePassword' && (formObj["password"] != formObj["rePassword"])) {
+            errors["rePassword"] = "Passwords are not matches";
+        }
+
+        console.log('errors');
+        console.log(errors);
+        this.setState({ errors: errors });
     }
 
     handleFormValidation = () => {
@@ -79,6 +114,18 @@ export class OracleForm extends Component {
         if (!formObj["pincode"] || typeof formObj["pincode"] === "undefined" || !formObj["pincode"].match(/^^[1-9][0-9]{5}$/)) {
             formIsValid = false;
             errors["pincode"] = "Please enter valid pincode";
+        }
+        if (!formObj["password"] || typeof formObj["password"] === "undefined") {
+            formIsValid = false;
+            errors["password"] = "Please enter valid password";
+        }
+        if (!formObj["rePassword"] || typeof formObj["rePassword"] === "undefined") {
+            formIsValid = false;
+            errors["rePassword"] = "Please enter valid Password";
+        }
+        else if (formObj["password"] != formObj["rePassword"]) {
+            formIsValid = false;
+            errors["rePassword"] = "Passwords are not matches";
         }
 
         console.log(errors);
