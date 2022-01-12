@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './OracleForm.css'
-import { TextField, Grid, Autocomplete, RadioGroup, FormLabel, FormControlLabel, Radio, FormHelperText } from '@mui/material';
+import { TextField, Grid, Autocomplete, RadioGroup, FormLabel, FormControlLabel, Radio, FormHelperText, InputUnstyled, BorderLinearProgress, Typography, Box } from '@mui/material';
 
 export class OracleForm extends Component {
 
@@ -29,6 +29,7 @@ export class OracleForm extends Component {
                 city: '',
                 state: '',
                 pincode: '',
+                selectedFile: null,
             },
             countries: ['India', 'UK', 'US'],
             states: ['Tamilnadu', 'Kerala', 'Andra'],
@@ -47,13 +48,31 @@ export class OracleForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+        this.onFileUpload();
         if (this.handleFormValidation()) {
+            this.onFileUpload();
             this.setState({ showResult: true });
         }
     }
 
     handleBack = () => {
         this.setState({ showResult: false });
+    }
+
+    onFileChange = (e) => {
+        this.setState({ selectedFile: e.target.files[0] });
+    }
+
+    onFileUpload = () => {
+        const formData = new FormData();
+
+        formData.append(
+            "myFile",
+            this.state.selectedFile,
+            this.state.selectedFile.name
+        );
+
+        console.log(this.state.selectedFile);
     }
 
     handleFormValidationOnChange = (field) => {
@@ -81,7 +100,7 @@ export class OracleForm extends Component {
         if (field === 'rePassword' && (!formObj["rePassword"] || typeof formObj["rePassword"] === "undefined")) {
             errors["rePassword"] = "Please enter valid Password";
         }
-        else if (field === 'rePassword' && (formObj["password"] != formObj["rePassword"])) {
+        else if (field === 'rePassword' && (formObj["password"] !== formObj["rePassword"])) {
             errors["rePassword"] = "Passwords are not matches";
         }
 
@@ -123,7 +142,7 @@ export class OracleForm extends Component {
             formIsValid = false;
             errors["rePassword"] = "Please enter valid Password";
         }
-        else if (formObj["password"] != formObj["rePassword"]) {
+        else if (formObj["password"] !== formObj["rePassword"]) {
             formIsValid = false;
             errors["rePassword"] = "Passwords are not matches";
         }
@@ -132,6 +151,25 @@ export class OracleForm extends Component {
         this.setState({ errors: errors });
         return formIsValid;
     }
+
+    fileData = () => {
+        if (this.state.selectedFile) {
+            return (
+                <div>
+                    <p>Details:</p>
+                    <p className='fileData'>File name: {this.state.selectedFile.name}</p>
+                    <p className='fileData'>File type: {this.state.selectedFile.type}</p>
+                </div >
+            );
+        }
+        else {
+            return (
+                <div>
+                    <p>Select profile image</p>
+                </div>
+            );
+        }
+    };
 
     render() {
         const { formObj } = this.state;
@@ -154,10 +192,10 @@ export class OracleForm extends Component {
                                                 <TextField fullWidth id="standard-basic email" label="Enter email" variant="standard" name="email" type="text" value={formObj.email} onChange={this.handleChange} helperText={errors.email} />
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
-                                                <TextField fullWidth id="standard-basic password" label="Password" variant="standard" type="password" name="password" type="Password" value={formObj.password} onChange={this.handleChange} helperText={errors.password} />
+                                                <TextField fullWidth id="standard-basic password" label="Password" variant="standard" type="password" name="password" value={formObj.password} onChange={this.handleChange} helperText={errors.password} />
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
-                                                <TextField fullWidth id="standard-basic rePassword" label="Retype password" variant="standard" type="password" name="rePassword" type="Password" value={formObj.rePassword} onChange={this.handleChange} helperText={errors.rePassword} />
+                                                <TextField fullWidth id="standard-basic rePassword" label="Retype password" variant="standard" type="password" name="rePassword" value={formObj.rePassword} onChange={this.handleChange} helperText={errors.rePassword} />
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
                                                 <TextField fullWidth id="standard-basic firstName" label="First Name" variant="standard" name="firstName" type="text" value={formObj.firstName} onChange={this.handleChange} helperText={errors.firstName} />
@@ -206,6 +244,11 @@ export class OracleForm extends Component {
                                             <Grid item xs={12} sm={6}>
                                                 <TextField fullWidth id="standard-basic pincode" label="Pincode" variant="standard" name="pincode" type="text" value={formObj.pincode} onChange={this.handleChange} helperText={errors.pincode} />
                                             </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <InputUnstyled type='file' onChange={this.onFileChange} />
+                                                {this.fileData()}
+                                            </Grid>
+
                                         </Grid>
                                     </Form.Group>
                                     <div className='d-flex justify-content-end'>

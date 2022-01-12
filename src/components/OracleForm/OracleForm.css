@@ -48,3 +48,8 @@ body {
   width: 60%;
   margin: auto;
 }
+.fileData {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
